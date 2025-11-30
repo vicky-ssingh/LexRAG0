@@ -1,10 +1,21 @@
+
 import { GoogleGenAI } from "@google/genai";
 import { ChatResponse } from "../types";
 
 // NOTE: In a full RAG setup, this service would fetch context from your Python/Flask backend
 // and then pass that context to Gemini. Here, we simulate the expert persona directly.
 
+// Correct: The API key must be obtained exclusively from process.env.API_KEY as per @google/genai guidelines.
+// Assume this variable is pre-configured, valid, and accessible.
 const apiKey = process.env.API_KEY; 
+
+// Ensure apiKey is available before initializing GoogleGenAI
+if (!apiKey) {
+  console.error("API_KEY is not defined. Please ensure it's set in your environment variables.");
+  // You might want to throw an error or handle this more gracefully in a production app
+  // For now, we'll proceed, but API calls will fail.
+}
+
 const ai = new GoogleGenAI({ apiKey: apiKey });
 
 const MODEL_NAME = 'gemini-2.5-flash';
